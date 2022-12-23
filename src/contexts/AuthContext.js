@@ -10,7 +10,8 @@ const AuthProvider = ({ children }) => {
   const [isInitialized, setIsInitialized] = useState(false);
 
   const logout = () => {
-    // TODO: Implement the logout logic
+    localStorage.removeItem('token');
+    setIsAuthenticated(false);
   };
 
   // eslint-disable-next-line no-unused-vars
@@ -19,10 +20,14 @@ const AuthProvider = ({ children }) => {
     {
       nextFetchPolicy: 'cache-and-network',
       onCompleted: () => {
-        // TODO: Implement on completed logic
+        if (currentUser?.me) {
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+        }
       },
       onError: () => {
-        // TODO: Implement on error logic
+        setIsAuthenticated(false);
       },
       refetchWritePolicy: 'overwrite',
     }
@@ -30,13 +35,25 @@ const AuthProvider = ({ children }) => {
 
   // eslint-disable-next-line no-unused-vars
   const onLoginSuccess = (token) => {
-    // TODO: Implement the onLoginSuccess logic
+    // Save the token in local storage
+    localStorage.setItem('token', token);
+
+    // Fetch the current user to update the user data in the context
+    getCurrentUser().then((response) => response);
   };
 
   useEffect(() => {
-    // TODO: implement the initialization logic
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      // If a token exists in local storage, fetch the current user to check if it's valid
+      getCurrentUser().then((response) => response);
+    } else {
+      // If no token exists, set isAuthenticated to false
+      setIsAuthenticated(false);
+    }
     setIsInitialized(true);
-  }, []);
+  }, [getCurrentUser]);
 
   return (
     <AuthContext.Provider

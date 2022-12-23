@@ -3,9 +3,14 @@ import React from 'react';
 import CenteredContent from 'src/components/CenteredContent';
 import Page from 'src/components/Page';
 import LoginForm from 'src/sections/auth/login/LoginForm';
+// eslint-disable-next-line
+console.log('in Login Page');
 
 const Login = () => (
   <Page title="Login">
+    {
+      // eslint-disable-next-line
+      console.log('in Login Page x2')}
     <CenteredContent>
       <Box maxWidth={450}>
         <Stack alignItems="center" direction="row" sx={{ mb: 5 }}>

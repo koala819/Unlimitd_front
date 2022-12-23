@@ -7,6 +7,7 @@ import GuestGuard from 'src/guards/GuestGuard';
 import RoleBasedGuard from 'src/guards/RoleBasedGuard';
 import useAuth from 'src/hooks/useAuth';
 import ConnectedUserLayout from 'src/layouts/ConnectedUserLayout';
+import Lost from 'src/pages/404';
 
 // eslint-disable-next-line react/display-name
 const Loadable = (Component) => (props) => {
@@ -63,7 +64,7 @@ const Router = () =>
     },
     {
       // TODO: Implement a "catch all" route that Navigate to the / page when hit a non-existing page
-      element: 'Remove this, and navigate to user root.',
+      element: <Lost />,
       path: '*',
     },
   ]);
